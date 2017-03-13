@@ -1,0 +1,218 @@
+ServerRoot "/etc/httpd"
+
+Include conf.modules.d/*.conf
+
+Listen 37.97.235.184:80
+Listen 37.97.235.184:443
+
+User apache
+Group apache
+
+#
+# Harden apache
+#
+
+UserDir Disabled
+ServerTokens Prod
+ServerSignature Off
+Header unset X-Powered-By
+Header always append X-Content-Type-Options nosniff
+Header always append X-Frame-Options Deny
+Header always append X-XSS-Protection "1; mode=block"
+TraceEnable Off
+FileETag None
+
+<Files ".ht*">
+  Require all denied
+</Files>
+
+ErrorLog "logs/error_log"
+LogLevel warn
+
+<IfModule log_config_module>
+  LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+  LogFormat "%h %l %u %t \"%r\" %>s %b" common
+  <IfModule logio_module>
+    # You need to enable mod_logio.c to use %I and %O
+    LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+  </IfModule>
+  CustomLog "logs/access_log" combined
+</IfModule>
+
+<IfModule alias_module>
+    ScriptAlias /cgi-bin/ "/var/www/cgi-bin/"
+</IfModule>
+
+<Directory "/var/www/cgi-bin">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<IfModule mime_module>
+  TypesConfig /etc/mime.types
+  AddType application/x-compress .Z
+  AddType application/x-gzip .gz .tgz
+  AddType text/html .shtml
+  AddOutputFilter INCLUDES .shtml
+</IfModule>
+
+AddDefaultCharset UTF-8
+
+<IfModule mime_magic_module>
+  MIMEMagicFile conf/magic
+</IfModule>
+
+EnableSendfile on
+
+
+#
+# SSL Config
+# 
+
+SSLProtocol all -SSLv2 -SSLv3
+SSLHonorCipherOrder on
+SSLCipherSuite "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 EECDH EDH+aRSA RC4 !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS !RC4"
+SSLPassPhraseDialog exec:/usr/libexec/httpd-ssl-pass-dialog
+SSLSessionCache shmcb:/run/httpd/sslcache(512000)
+SSLSessionCacheTimeout 300
+SSLRandomSeed startup file:/dev/urandom  256
+SSLRandomSeed connect builtin
+SSLCryptoDevice builtin
+
+
+#
+# dutchstrength.com
+#
+
+<VirtualHost 37.97.235.184:80 >
+
+  ServerName www.dutchstrength.com
+  ServerAdmin webmaster@dutchstrength.com
+  ServerAlias www.dutchstrength.com dutchstrength.com
+
+  DocumentRoot /var/www/html/dutchstrength/production
+  <Directory "/var/www/html/dutchstrength/production">
+    AllowOverride AuthConfig FileInfo Indexes Limit Options=Indexes,Includes,IncludesNOEXEC,MultiViews,SymLinksIfOwnerMatch,FollowSymLinks,None
+    Require all granted
+  </Directory>
+
+  RedirectMatch permanent /(?!.well-known/.*) https://www.dutchstrength.com
+
+</VirtualHost>
+
+<VirtualHost 37.97.235.184:443 >
+
+  SSLEngine on
+  SSLCertificateFile /etc/letsencrypt/live/www.dutchstrength.com-0001/cert.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/www.dutchstrength.com-0001/privkey.pem
+  SSLCertificateChainFile /etc/letsencrypt/live/www.dutchstrength.com-0001/chain.pem
+  
+  ServerName www.dutchstrength.com
+  ServerAdmin webmaster@dutchstrength.com
+  ServerAlias www.dutchstrength.com dutchstrength.com
+
+  DocumentRoot /var/www/html/dutchstrength/production
+
+  RewriteEngine on
+  RewriteCond %{HTTP_HOST} !^www\.
+  RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+  
+  php_flag opcache on
+
+  <Directory "/var/www/html/dutchstrength/production">
+    AllowOverride AuthConfig FileInfo Indexes Limit Options=Indexes,Includes,IncludesNOEXEC,MultiViews,SymLinksIfOwnerMatch,FollowSymLinks,None
+    Require all granted
+  </Directory>
+
+</VirtualHost>
+
+
+#
+# testing.dutchstrength.com
+#
+
+<VirtualHost 37.97.235.184:80 >
+
+  ServerName testing.dutchstrength.com
+  ServerAdmin webmaster@dutchstrength.com
+
+  DocumentRoot /var/www/html/dutchstrength/testing
+
+  <Directory "/var/www/html/dutchstrength/testing">
+    AllowOverride AuthConfig FileInfo Indexes Limit Options=Indexes,Includes,IncludesNOEXEC,MultiViews,SymLinksIfOwnerMatch,FollowSymLinks,None
+    Require all granted
+  </Directory>
+
+  RedirectMatch permanent /(?!.well-known/.*) https://testing.dutchstrength.com
+
+</VirtualHost>
+
+<VirtualHost 37.97.235.184:443 >
+
+  SSLEngine on
+  SSLCertificateFile /etc/letsencrypt/live/testing.dutchstrength.com/cert.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/testing.dutchstrength.com/privkey.pem
+  SSLCertificateChainFile /etc/letsencrypt/live/testing.dutchstrength.com/chain.pem
+
+  ServerName testing.dutchstrength.com
+  ServerAdmin webmaster@dutchstrength.com
+
+  DocumentRoot /var/www/html/dutchstrength/testing
+
+  php_flag opcache off
+
+  <Directory "/var/www/html/dutchstrength/testing">
+    AllowOverride AuthConfig FileInfo Indexes Limit Options=Indexes,Includes,IncludesNOEXEC,MultiViews,SymLinksIfOwnerMatch,FollowSymLinks,None
+    Require all granted
+  </Directory>
+
+</VirtualHost>
+
+
+#
+# acceptance.dutchstrength.com
+#
+
+<VirtualHost 37.97.235.184:80 >
+
+  ServerName acceptance.dutchstrength.com
+  ServerAdmin webmaster@dutchstrength.com
+
+  DocumentRoot /var/www/html/dutchstrength/acceptance
+  <Directory "/var/www/html/dutchstrength/acceptance">
+    AllowOverride AuthConfig FileInfo Indexes Limit Options=Indexes,Includes,IncludesNOEXEC,MultiViews,SymLinksIfOwnerMatch,FollowSymLinks,None
+    Require all granted
+  </Directory>
+
+  RedirectMatch permanent /(?!.well-known/.*) https://acceptance.dutchstrength.com
+
+</VirtualHost>
+
+<VirtualHost 37.97.235.184:443 >
+
+  SSLEngine on
+  SSLCertificateFile /etc/letsencrypt/live/acceptance.dutchstrength.com/cert.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/acceptance.dutchstrength.com/privkey.pem
+  SSLCertificateChainFile /etc/letsencrypt/live/acceptance.dutchstrength.com/chain.pem
+
+  ServerName acceptance.dutchstrength.com
+  ServerAdmin webmaster@dutchstrength.com
+
+  php_flag opcache off
+
+  DocumentRoot /var/www/html/dutchstrength/acceptance
+
+  <Directory "/var/www/html/dutchstrength/acceptance">
+    AllowOverride AuthConfig FileInfo Indexes Limit Options=Indexes,Includes,IncludesNOEXEC,MultiViews,SymLinksIfOwnerMatch,FollowSymLinks,None
+    Require all granted
+  </Directory>
+
+</VirtualHost>
+
+
+#
+# Extra config
+#
+
+Include conf.d/*.conf
