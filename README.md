@@ -4,9 +4,31 @@
 
 ### Install dependencies
 
-You'll need Git, HTTPD and Varnish installed.
+You'll need Git, HTTPD, Varnish and Certbot installed.
 
-`yum install git httpd varnish -y`
+`yum install git httpd varnish certbot -y`
+
+Make sure the Centos 7 firewall will allow http and https connections
+
+`firewall-cmd --zone=public --permanent --add-service=http`
+
+`firewall-cmd --zone=public --permanent --add-service=https`
+
+`service firewalld restart`
+
+If you have SELinux installed, you will need to allow HTTPD to use proxy. Use the -P flag for persistence:
+
+`setsebool -P httpd_can_network_connect 1`
+
+Start httpd and varnish services and register them to auto start on reboot:
+
+`service httpd start`
+
+`systemctl enable httpd`
+
+`service varnish start`
+
+`systemctl enable varnish`
 
 ### Deploy key
 
@@ -40,7 +62,7 @@ Make a copy of the default configuration template:
 
 Replace IP and www.example.com with your server's public ip address and your domain:
 
-`sed -i 's/example.com/{yourdomain}/g' sites-available/{yourdomain}.conf`
+`sed -i 's/www.example.com/{yourdomain}/g' sites-available/{yourdomain}.conf`
 
 `sed -i 's/IP/{yourdomain}/g' sites-available/{youip}.conf`
 
@@ -53,3 +75,5 @@ Create a symbolic link to the actual configuration file in `sites-enabled`:
 Restart HTTPD:
 
 `service httpd restart`
+
+
