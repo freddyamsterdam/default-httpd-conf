@@ -37,7 +37,9 @@ Start httpd and varnish services and register them to auto start on reboot:
 
 ### Deploy key
 
-To be to clone this repository, you'll need to add an SSH key to your server. Please also add this deploy key under Settings > Deploy Keys.
+To be to clone this repository, you'll need to add an SSH key to your server's SSH agent. Please refer to this article for more information:
+
+https://help.github.com/articles/connecting-to-github-with-ssh/
 
 ## Do it bro(sephine), do it.
 
