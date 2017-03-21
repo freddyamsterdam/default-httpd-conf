@@ -81,3 +81,14 @@ Restart HTTPD:
 `service httpd restart`
 
 
+### Finishing touches
+
+Assuming you have already modified your DNS zonefile to point to your server, you can now apply for a free SSL certificate:
+
+`certbot certonly --webroot -w /var/www/html/{yourdomain} -d {yourdomain}`
+
+Providing everything goes well, please uncommenct line 18 in `sites-available/{yourdomain}.conf`, and then uncomment entire virtual host block.
+
+Restart HTTPD:
+
+`service httpd restart`
