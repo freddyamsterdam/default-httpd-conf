@@ -2,6 +2,18 @@
 
 ## Prerequisites
 
+### Sudo
+
+You will need to be logged in as a sudoer, presumably `root`.
+
+`su`
+
+or
+
+`sudo -i`
+
+Fill in password if promted for one.
+
 ### Install dependencies
 
 You will need Git, HTTPD, mod_ssl, Varnish and Certbot installed.
