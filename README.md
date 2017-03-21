@@ -31,7 +31,7 @@ As `/etc/httpd` is not an empty directory, a standard `git clone` will not work,
 Alternatively, you could `git clone` into and empty directy and use `mv` to move the repository into the `/etc/httpd`. It is up to you. In my opinion, the method above works best.
 
 ### Customise configuration
-Before we proceed, in the following segment, you will need to replace {yourdomain} and {yourip} with.. well whatever, you got it. :+1
+Before we proceed, in the following segments, you will need to replace {yourdomain} and {yourip} with.. well whatever, you got it. The assumption is your are still in `etc/httpd`.
 
 Make a copy of the default configuration template:
 
@@ -43,3 +43,10 @@ Replace IP and www.example.com with your server's public ip address and your dom
 
 `sed -i 's/IP/{yourdomain}/g' sites-available/{youip}.conf`
 
+### Enable the site
+
+`ln -s sites-available/{yourdomain}.conf sites-enabled/{yourdomain}.conf`
+
+### Restart apache
+
+`service httpd restart`
