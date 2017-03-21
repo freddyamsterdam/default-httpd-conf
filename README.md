@@ -30,6 +30,11 @@ Make sure the Centos 7 firewall will allow http and https connections
 `service firewalld restart`
 
 
+Our HTTPD configuration files assume that Varnish uses port 8080 for the backend and that Varnish itself is listening on port 6081. These are the default Varnish settings, but it can save you a lot of frustation by taking the time to verify these settings in `/etc/varnish/default.vcl` and `/etc/varnish/varnish.params`. Make changes where necessary.
+
+### Correct permissions
+
+
 If you have SELinux installed, you will need to allow HTTPD to use proxy. Use the -P flag for persistence:
 
 `setsebool -P httpd_can_network_connect 1`
@@ -42,8 +47,7 @@ Also, be sure to make sure HTTPD owns `/var/www/`
 
 `chown -R apache:apache /var/www`
 
-
-Our HTTPD configuration files assume that Varnish uses port 8080 for the backend and that Varnish itself is listening on port 6081. These are the default Varnish settings, but it can save you a lot of frustation by taking the time to verify these settings in `/etc/varnish/default.vcl` and `/etc/varnish/varnish.params`. Make changes where necessary.
+### Start and register services
 
 Start httpd and varnish services and register them to auto start on reboot:
 
