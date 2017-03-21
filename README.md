@@ -2,9 +2,11 @@
 
 ## Prerequisites
 
+
 ### Sudo
 
 You will need to be logged in as a sudoer, presumably `root`. Run `su` or `sudo -i`. Fill in password on prompt.
+
 
 ### Install dependencies
 
@@ -13,7 +15,7 @@ You will need Git, HTTPD, mod_ssl, Varnish and Certbot installed.
 `yum install git httpd mod_ssl varnish certbot -y`
 
 
-Make sure the Centos 7 firewall will allow http and https connections
+Open up ports 80 and 443 using the Centos 7 Firewall.
 
 `firewall-cmd --zone=public --permanent --add-service=http`
 
@@ -24,8 +26,8 @@ Make sure the Centos 7 firewall will allow http and https connections
 
 Our HTTPD configuration files assume that Varnish uses port 8080 for the backend and that Varnish itself is listening on port 6081. These are the default Varnish settings, but it can save you a lot of frustation by taking the time to verify these settings in `/etc/varnish/default.vcl` and `/etc/varnish/varnish.params`. Make changes where necessary.
 
-### Correct permissions
 
+### Set permissions
 
 If you have SELinux installed, you will need to allow HTTPD to use proxy. Use the -P flag for persistence:
 
@@ -39,6 +41,7 @@ Also, be sure to make sure HTTPD owns `/var/www/`
 
 `chown -R apache:apache /var/www`
 
+
 ### Start and register services
 
 Start httpd and varnish services and register them to auto start on reboot:
@@ -51,13 +54,17 @@ Start httpd and varnish services and register them to auto start on reboot:
 
 `systemctl enable varnish`
 
+
 ### Deploy key
 
 To be to clone this repository, you'll need to add an SSH key to your server's SSH agent. Please refer to this article for more information:
 
 https://help.github.com/articles/connecting-to-github-with-ssh/
 
+
+
 ## Do it bro(sephine), do it.
+
 
 ### Clone git repo into httpd configuration directory
 
@@ -76,6 +83,7 @@ As `/etc/httpd` is not an empty directory, a standard `git clone` will not work,
 
 
 Alternatively, you could `git clone` into and empty directy and use `mv` to move the repository into the `/etc/httpd`. It is up to you. In my opinion, the method above works best.
+
 
 ### Customise configuration
 
