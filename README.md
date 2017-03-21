@@ -34,6 +34,14 @@ If you have SELinux installed, you will need to allow HTTPD to use proxy. Use th
 
 `setsebool -P httpd_can_network_connect 1`
 
+Allow HTTPD to write to `/var/www/`
+
+`chcon -t httpd_sys_rw_content_t /var/www/ -R`
+
+Also, be sure to make sure HTTPD owns `/var/www/`
+
+`chown -R apache:apache /var/www`
+
 
 Our HTTPD configuration files assume that Varnish uses port 8080 for the backend and that Varnish itself is listening on port 6081. These are the default Varnish settings, but it can save you a lot of frustation by taking the time to verify these settings in `/etc/varnish/default.vcl` and `/etc/varnish/varnish.params`. Make changes where necessary.
 
@@ -86,11 +94,16 @@ Make a copy of the default configuration template:
 `cp sites-available/domain.conf.tpl sites-available/{yourdomain}.conf`
 
 
-Replace IP and www.example.com with your server's public ip address and your domain:
+Replace `IP` and `example.com` with your server's public ip address and your domain:
 
-`sed -i 's/www.example.com/{yourdomain}/g' sites-available/{yourdomain}.conf`
+`sed -i 's/example.com/{yourdomain}/g' sites-available/{yourdomain}.conf`
 
 `sed -i 's/IP/{yourip}/g' sites-available/{yourip}.conf`
+
+
+Now create a directory for your web site:
+
+`mkdir /var/www/html/{yourdomain}`
 
 
 ### Enable custom configuration
