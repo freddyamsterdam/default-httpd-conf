@@ -4,9 +4,9 @@
 
 ### Install dependencies
 
-You'll need Git, HTTPD, Varnish and Certbot installed.
+You'll need Git, HTTPD, mod_ssl, Varnish and Certbot installed.
 
-`yum install git httpd varnish certbot -y`
+`yum install git httpd mod_ssl varnish certbot -y`
 
 Make sure the Centos 7 firewall will allow http and https connections
 
@@ -71,6 +71,10 @@ Replace IP and www.example.com with your server's public ip address and your dom
 Create a symbolic link to the actual configuration file in `sites-enabled`:
 
 `ln -s sites-available/{yourdomain}.conf sites-enabled/{yourdomain}.conf`
+
+Remove default SSL configuration:
+
+`rm conf.d/ssl.conf`
 
 Restart HTTPD:
 
