@@ -68,12 +68,7 @@ https://help.github.com/articles/connecting-to-github-with-ssh/
 
 ### Clone git repo into httpd configuration directory
 
-First of all, change into the HTTPD directory:
-
-`cd /etc/httpd`
-
-
-As `/etc/httpd` is not an empty directory, a standard `git clone` will not work, so use the steps below to "clone" our repo:
+First of all, change into the HTTPD directory by running `cd /etc/httpd`. Keep in mind that `/etc/httpd` is not an empty directory. For this reason a standard `git clone` will not work, so use the steps below to "clone" our repo:
 
 `git init`
 
@@ -146,6 +141,7 @@ Set up a cronjob to attempt to renew your certbot certificates every days.
 Run a test to make sure the renewal process actually works
 
 `certbot renew --dry-run`
+
 
 ## Done and dusted
 
