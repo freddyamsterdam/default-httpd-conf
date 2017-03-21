@@ -4,15 +4,7 @@
 
 ### Sudo
 
-You will need to be logged in as a sudoer, presumably `root`.
-
-`su`
-
-or
-
-`sudo -i`
-
-Fill in password if promted for one.
+You will need to be logged in as a sudoer, presumably `root`. Run `su` or `sudo -i`. Fill in password on prompt.
 
 ### Install dependencies
 
