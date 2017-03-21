@@ -113,3 +113,9 @@ Restart HTTPD to allow your changes to take effect:
 Open up your favourite web browser to verify that your web site works.
 
 Set up a cronjob to attempt to renew your certbot certificates every days.
+
+`echo "0 0 * * * root certbot renew" >> /etc/crontab`
+
+Run a test to make sure the renewal process actually works
+
+`certbot renew --dry-run`
