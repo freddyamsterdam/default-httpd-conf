@@ -104,7 +104,7 @@ Assuming you have already modified your DNS zonefile to point to your servers pu
 
 `certbot certonly --webroot -w /var/www/html/{yourdomain} -d {yourdomain}`
 
-Providing everything goes well, please uncommenct line 18 in `sites-available/{yourdomain}.conf`, and then uncomment entire virtual host block which listens to port 433.
+Providing everything goes well, please uncomment line 18 in `sites-available/{yourdomain}.conf`, and then uncomment entire virtual host block which listens to port 433.
 
 Restart HTTPD to allow your changes to take effect:
 
