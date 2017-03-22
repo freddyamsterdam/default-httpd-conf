@@ -1,19 +1,23 @@
 # Default HTTPD configuration for Centos 7
 
+Setting up HTTPD can be a pain in the butt hole at the best of times. For this reason, I have set up this repository to help speed up the process, thusly avoiding premature hair loss, accelerated aging and certain death.
+
+
 ## Prerequisites
 
+### Relax
+
+Yo, I see you. And I got you. Take it easy, yeah? Light the old fire place and prop your feet up. This should be a right laught mate.
 
 ### Sudo
 
 You will need to be logged in as a sudoer, presumably `root`. Run `su` or `sudo -i`. Fill in password on prompt.
-
 
 ### Install dependencies
 
 You will need Git, HTTPD, mod_ssl, Varnish and Certbot installed.
 
 `yum install git httpd mod_ssl varnish certbot -y`
-
 
 Open up ports 80 and 443 using the Centos 7 Firewall.
 
@@ -23,9 +27,7 @@ Open up ports 80 and 443 using the Centos 7 Firewall.
 
 `service firewalld restart`
 
-
 Our HTTPD configuration files assume that Varnish uses port 8080 for the backend and that Varnish itself is listening on port 6081. These are the default Varnish settings, but it can save you a lot of frustation by taking the time to verify these settings in `/etc/varnish/default.vcl` and `/etc/varnish/varnish.params`. Make changes where necessary.
-
 
 ### Set permissions
 
@@ -41,7 +43,6 @@ Also, be sure to make sure HTTPD owns `/var/www/`
 
 `chown -R apache:apache /var/www`
 
-
 ### Start and register services
 
 Start httpd and varnish services and register them to auto start on reboot:
@@ -54,7 +55,6 @@ Start httpd and varnish services and register them to auto start on reboot:
 
 `systemctl enable varnish`
 
-
 ### Deploy key
 
 To be to clone this repository, you'll need to add an SSH key to your server's SSH agent. Please refer to this article for more information:
@@ -62,9 +62,7 @@ To be to clone this repository, you'll need to add an SSH key to your server's S
 https://help.github.com/articles/connecting-to-github-with-ssh/
 
 
-
 ## Do it bro(sephine), do it.
-
 
 ### Clone git repo into httpd configuration directory
 
@@ -79,7 +77,6 @@ First of all, change into the HTTPD directory by running `cd /etc/httpd`. Keep i
 
 Alternatively, you could `git clone` into and empty directy and use `mv` to move the repository into the `/etc/httpd`. It is up to you. In my opinion, the method above works best.
 
-
 ### Customise configuration
 
 Before we proceed, in the following segments, you will need to replace {yourdomain} and {yourip} with.. well whatever, you got it. The assumption is your are still in `etc/httpd`.
@@ -92,18 +89,15 @@ Make a copy of the default configuration template:
 
 `cp sites-available/domain.conf.tpl sites-available/{yourdomain}.conf`
 
-
 Replace `IP` and `example.com` with your server's public ip address and your domain:
 
 `sed -i 's/example.com/{yourdomain}/g' sites-available/{yourdomain}.conf`
 
 `sed -i 's/IP/{yourip}/g' sites-available/{yourip}.conf`
 
-
 Now create a directory for your web site:
 
 `mkdir /var/www/html/{yourdomain}`
-
 
 ### Enable custom configuration
 
@@ -111,16 +105,13 @@ Create a symbolic link to the actual configuration file in `sites-enabled`:
 
 `ln -s sites-available/{yourdomain}.conf sites-enabled/{yourdomain}.conf`
 
-
 Remove default SSL configuration (very important):
 
 `rm conf.d/ssl.conf`
 
-
 Restart HTTPD:
 
 `service httpd restart`
-
 
 ### Finishing touches
 
@@ -142,7 +133,8 @@ Run a test to make sure the renewal process actually works
 
 `certbot renew --dry-run`
 
-
 ## Done and dusted
 
-Open up your favourite web browser to verify that your web site works on both http and https.
+Double click the icon of your favourite web browse and pop over to your domain to verify that it works on both http and https.
+
+Cheers
