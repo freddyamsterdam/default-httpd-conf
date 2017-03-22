@@ -61,6 +61,4 @@
     Require all granted
   </Directory>
 
-  php_flag opcache on
-
 </VirtualHost>
