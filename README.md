@@ -39,15 +39,15 @@ If you see `Error: No matching Packages to list`, skip to **Start and register s
 
 1. Allow HTTPD to use proxy, use the -P flag for persistence:
 
-`setsebool -P httpd_can_network_connect 1`
+  `setsebool -P httpd_can_network_connect 1`
 
 2. Allow HTTPD to write to `/var/www/`
 
-`chcon -t httpd_sys_rw_content_t /var/www/ -R`
+  `chcon -t httpd_sys_rw_content_t /var/www/ -R`
 
 3. Make sure HTTPD owns `/var/www/`
 
-`chown -R apache:apache /var/www`
+  `chown -R apache:apache /var/www`
 
 ### Start and register services
 
