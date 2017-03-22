@@ -107,7 +107,7 @@ Now create a directory for your web site:
 
 Create a symbolic link to the actual configuration file in `sites-enabled`:
 
-`ln -s sites-available/{yourdomain}.conf sites-enabled/{yourdomain}.conf`
+`ln -s /etc/httpd/sites-available/{yourdomain}.conf /etc/httpd/sites-enabled/{yourdomain}.conf`
 
 Remove default SSL configuration (very important):
 
