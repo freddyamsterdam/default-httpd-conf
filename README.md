@@ -2,6 +2,8 @@
 
 Setting up HTTPD can be a pain in the sphincter at the best of times. When using Varnish and SSL, the proverbial tends to hit the fan. For this reason, I have set up this repository to help speed up the process, thusly avoiding premature hair loss, accelerated aging and an almost certain perilous death.
 
+** Proceed with caution ** I am not in any way responsible if this somehow messes up your server configuration or causes any other damages to anything made by anyone ever in the concievable universe. My apologies for the brief, but necessary, introduction to Buzz Killington. 
+
 
 ## 1. Prerequisites
 
@@ -29,7 +31,7 @@ Open up ports 80 and 443 using the Centos 7 Firewall.
 
 Our HTTPD configuration files assume that Varnish uses port 8080 for the backend and that Varnish itself is listening on port 6081. These are the default Varnish settings, but it can save you a lot of frustation by taking the time to verify these settings in `/etc/varnish/default.vcl` and `/etc/varnish/varnish.params`. Make changes where necessary.
 
-### 1.4. Set permissions
+### 1.4. Permissions
 
 If you have SELinux installed, you will need to modify some settings in order for this to work. If you are unsure as to whether or not you have SELinux installed, simply run:
 
@@ -60,12 +62,6 @@ Start httpd and varnish services and register them to auto start on reboot:
 `service varnish start`
 
 `systemctl enable varnish`
-
-### 1.6. Git deploy key
-
-To be to clone this repository, you'll need to add an SSH key to your server's SSH agent. Please refer to this article for more information:
-
-https://help.github.com/articles/connecting-to-github-with-ssh/
 
 
 ## 2. Do it bro(sephine), do it.
