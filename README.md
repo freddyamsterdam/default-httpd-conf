@@ -31,15 +31,21 @@ Our HTTPD configuration files assume that Varnish uses port 8080 for the backend
 
 ### Set permissions
 
-If you have SELinux installed, you will need to allow HTTPD to use proxy. Use the -P flag for persistence:
+If you have SELinux installed, you will need to modify some settings in order for this to work. If you are unsure as to whether or not you have SELinux installed, simply run:
+
+`yum list installed *selinux*`
+
+If you see `Error: No matching Packages to list`, skip to **Start and register services**. Otherwise, perform the following steps:
+
+1. Allow HTTPD to use proxy, use the -P flag for persistence:
 
 `setsebool -P httpd_can_network_connect 1`
 
-Allow HTTPD to write to `/var/www/`
+2. Allow HTTPD to write to `/var/www/`
 
 `chcon -t httpd_sys_rw_content_t /var/www/ -R`
 
-Also, be sure to make sure HTTPD owns `/var/www/`
+3. Make sure HTTPD owns `/var/www/`
 
 `chown -R apache:apache /var/www`
 
