@@ -1,21 +1,21 @@
 #
-# example.com| PRODUCTION
+# DOMAIN | PRODUCTION
 #
 
 # Redirect everything except Let's Encrypt Certificate renewal challenges to https://
 <VirtualHost IP:80 >
 
-  ServerName www.example.com
-  ServerAdmin hi@freddydenoord.nl
-  ServerAlias www.example.com example.com
+  ServerName DOMAIN
+  ServerAdmin EMAIL
+  ServerAlias www.DOMAIN DOMAIN
 
-  DocumentRoot /var/www/html/example.com/production
-  <Directory "/var/www/html/example.com/production">
+  DocumentRoot /var/www/html/DOMAIN/production
+  <Directory "/var/www/html/DOMAIN/production">
     AllowOverride AuthConfig FileInfo Indexes Limit Options=Indexes,Includes,IncludesNOEXEC,MultiViews,SymLinksIfOwnerMatch,FollowSymLinks,None
     Require all granted
   </Directory>
 
-  #RedirectMatch permanent ^(?!/\.well-known/acme-challenge/).* https://www.example.com$0
+  #RedirectMatch permanent ^(?!/\.well-known/acme-challenge/).* https://www.DOMAIN$0
 
 </VirtualHost>
 
@@ -23,13 +23,13 @@
 #<VirtualHost IP:443 >
 #
 #  SSLEngine on
-#  SSLCertificateFile /etc/letsencrypt/live/www.example.com/cert.pem
-#  SSLCertificateKeyFile /etc/letsencrypt/live/www.example.com/privkey.pem
-#  SSLCertificateChainFile /etc/letsencrypt/live/www.example.com/chain.pem
+#  SSLCertificateFile /etc/letsencrypt/live/www.DOMAIN/cert.pem
+#  SSLCertificateKeyFile /etc/letsencrypt/live/www.DOMAIN/privkey.pem
+#  SSLCertificateChainFile /etc/letsencrypt/live/www.DOMAIN/chain.pem
 #
-#  ServerName www.example.com
-#  ServerAdmin hi@freddydenoord.nl
-#  ServerAlias www.example.com example.com
+#  ServerName www.DOMAIN
+#  ServerAdmin EMAIL
+#  ServerAlias www.DOMAIN DOMAIN
 #
 #  <Proxy *>
 #    Require all granted
@@ -50,13 +50,13 @@
 # Serve site
 <VirtualHost 127.0.0.1:8080 >
 
-  ServerName www.example.com
-  ServerAdmin hi@freddydenoord.nl
-  ServerAlias www.example.com example.com
+  ServerName www.DOMAIN
+  ServerAdmin EMAIL
+  ServerAlias www.DOMAIN DOMAIN
 
-  DocumentRoot /var/www/html/example.com/production
+  DocumentRoot /var/www/html/DOMAIN/production
   
-  <Directory "/var/www/html/example.com/production">
+  <Directory "/var/www/html/DOMAIN/production">
     AllowOverride AuthConfig FileInfo Indexes Limit Options=Indexes,Includes,IncludesNOEXEC,MultiViews,SymLinksIfOwnerMatch,FollowSymLinks,None
     Require all granted
   </Directory>
