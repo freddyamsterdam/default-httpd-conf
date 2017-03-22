@@ -1,4 +1,4 @@
-# Default HTTPD configuration for Centos 7
+# Default HTTPD configuration for Centos 7, using Varnish and SSL
 
 Setting up HTTPD can be a pain in the sphincter at the best of times. When using Varnish and SSL, the proverbial tends to hit the fan. For this reason, I have set up this repository to help speed up the process, thusly avoiding premature hair loss, accelerated aging and an almost certain perilous death.
 
