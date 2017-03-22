@@ -95,9 +95,9 @@ Replace `IP`, `DOMAIN` and `EMAIL` with your server's public ip address, your do
 
 `sed -i 's/DOMAIN/{yourdomain}/g' sites-available/{yourdomain}.conf`
 
-`sed -i 's/EMAIL/{yourdomain}/g' sites-available/{youremail}.conf`
+`sed -i 's/EMAIL/{youremail}/g' sites-available/{yourdomain}.conf`
 
-`sed -i 's/IP/{yourip}/g' sites-available/{yourip}.conf`
+`sed -i 's/IP/{yourip}/g' sites-available/{yourdomain}.conf`
 
 Now create a directory for your web site:
 
