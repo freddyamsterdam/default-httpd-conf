@@ -141,4 +141,4 @@ Run a test to make sure the renewal process actually works
 
 ## 3. Done and dusted
 
-Double click the icon of your favourite web browse and pop over to your domain to verify that it works on both http and https.
+Double click the icon of your favourite web browser and pop over to your domain to verify that it works on both http and https.
