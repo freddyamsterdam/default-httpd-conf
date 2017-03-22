@@ -1,13 +1,13 @@
 # Default HTTPD configuration for Centos 7
 
-Setting up HTTPD can be a pain in the butt hole at the best of times. For this reason, I have set up this repository to help speed up the process, thusly avoiding premature hair loss, accelerated aging and certain death.
+Setting up HTTPD can be a pain in the sphincter at the best of times. When using Varnish and SSL, the proverbial tends to hit the fan. For this reason, I have set up this repository to help speed up the process, thusly avoiding premature hair loss, accelerated aging and an almost certain perilous death.
 
 
 ## Prerequisites
 
 ### Relax
 
-Yo, I see you. And I got you. Take it easy, yeah? Light the old fire place and prop your feet up. This should be a right laught mate.
+Yo, I see you. And I got you. Take it easy, yeah? Light the old fire place and prop your feet up. This should be a right laugh, mate.
 
 ### Sudo
 
