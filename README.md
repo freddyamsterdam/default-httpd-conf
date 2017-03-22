@@ -111,12 +111,11 @@ Create a symbolic link to the actual configuration file in `sites-enabled`:
 
 Remove default SSL configuration (very important):
 
-`rm conf.d/ssl.conf`
+`rm -f conf.d/ssl.conf`
 
 Restart HTTPD:
 
 `service httpd restart`
-
 ### 2.4. Finishing touches
 
 Assuming you have already modified your DNS zonefile to point to your servers public IP address and that your DNS has resolved, you can get a free SSL certificate:
