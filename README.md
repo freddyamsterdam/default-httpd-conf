@@ -43,13 +43,13 @@ If you see `Error: No matching Packages to list`, skip to **1.5. Start and regis
 
   `setsebool -P httpd_can_network_connect 1`
 
-2. Allow HTTPD to write to `/var/www/`
+2. Allow HTTPD to write to `/var/www/html`
 
-  `chcon -t httpd_sys_rw_content_t /var/www/ -R`
+  `chcon -t httpd_sys_rw_content_t /var/www/html -R`
 
-3. Make sure HTTPD owns `/var/www/`
+3. Make sure HTTPD owns `/var/www/html`
 
-  `chown -R apache:apache /var/www`
+  `chown -R apache:apache /var/www/html`
 
 ### 1.5. Start and register services
 
