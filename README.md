@@ -11,7 +11,7 @@ Yo, I see you. And I got you. Take it easy, yeah? Light the old fire place and p
 
 ### Sudo
 
-You will need to be logged in as a sudoer, presumably `root`. Run `su` or `sudo -i`. Fill in password on prompt.
+You will need to be logged in as a sudoer, presumably `root`. Run `su` or `sudo -i` and fill in the correspoding password on prompt.
 
 ### Install dependencies
 
