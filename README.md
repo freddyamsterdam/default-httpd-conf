@@ -81,7 +81,7 @@ Alternatively, you could `git clone` into and empty directy and use `mv` to move
 
 ### 2.2. Customise configuration
 
-Before we proceed, in the following segments, you will need to replace {yourdomain} and {yourip} with.. well whatever, you got it. The assumption is your are still in `etc/httpd`.
+Before we proceed, in the following segments, you will need to replace {yourdomain}, {youremail} and {yourip} with.. well whatever, you got it. The assumption is your are still in `etc/httpd`.
 
 First off, set the correct IP address in the main HTTPD configuration file
 
@@ -91,15 +91,17 @@ Make a copy of the default configuration template:
 
 `cp sites-available/domain.conf.tpl sites-available/{yourdomain}.conf`
 
-Replace `IP` and `example.com` with your server's public ip address and your domain:
+Replace `IP`, `DOMAIN` and `EMAIL` with your server's public ip address, your domain and your email:
 
-`sed -i 's/example.com/{yourdomain}/g' sites-available/{yourdomain}.conf`
+`sed -i 's/DOMAIN/{yourdomain}/g' sites-available/{yourdomain}.conf`
+
+`sed -i 's/EMAIL/{yourdomain}/g' sites-available/{youremail}.conf`
 
 `sed -i 's/IP/{yourip}/g' sites-available/{yourip}.conf`
 
 Now create a directory for your web site:
 
-`mkdir /var/www/html/{yourdomain}`
+`mkdir /var/www/html/{yourdomain}/production`
 
 ### 2.3. Enable custom configuration
 
